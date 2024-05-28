@@ -43,9 +43,9 @@ const Signup = () => {
   const HandleSubmit = (values, props) => {
     console.log(values);
     console.log(props);
-    navigate("/signin");
-    // history.push("/signin");
-    // <Redirect to='/signin'/>
+    navigate("/");
+    // history.push("/");
+    // <Redirect to='/'/>
 
     setTimeout(() => {
       props.resetForm();

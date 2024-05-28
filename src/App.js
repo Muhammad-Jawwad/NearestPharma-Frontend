@@ -11,11 +11,9 @@ function App() {
       <Routes path="/">
         <Route index element={<Signin />} />
         <Route path="Registration" element={<Registration />} />
-        <Route path="signin" element={<Signin />} />
         <Route path="updatedmedicineform" element={<UpdatedMedicineForm />} />
         <Route path="medicinelists" element={<MedicineLists />} />
         <Route path="updatedmedicinelist" element={<UpdatedMedicineList />} />
-
       </Routes>
     </Router>
   );

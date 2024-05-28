@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, MenuItem, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./MedicineLists.css";
+import { apiURL } from "./temp";
 
 const MedicineLists = () => {
   const [medicineName, setMedicineName] = useState("");
@@ -19,7 +20,7 @@ const MedicineLists = () => {
     const fetchExistingMedicines = async () => {
       try {
         const response = await fetch(
-          "https://nearest-pharma-be.vercel.app/medicine/"
+          `${apiURL}/medicine/`
         );
         if (response.ok) {
           const data = await response.json();
@@ -42,7 +43,7 @@ const MedicineLists = () => {
         setUpdateMessage("Medicine Name is required!");
       } else {
         const response = await fetch(
-          "https://nearest-pharma-be.vercel.app/medicine/new",
+          `${apiURL}/medicine/new`,
           {
             method: "POST",
             headers: {
@@ -89,7 +90,7 @@ const MedicineLists = () => {
         setUpdateMessage("Medicine Price is required!")
       } else {
         const response = await fetch(
-          "https://nearest-pharma-be.vercel.app/pharmacy/registerMedicine",
+          `${apiURL}/pharmacy/registerMedicine`,
           {
             method: "POST",
             headers: {

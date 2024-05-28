@@ -5,6 +5,7 @@ import Modal from "react-modal"; // Remove duplicate import statement
 import { useLocation, useNavigate } from "react-router-dom";
 import UpdatedMedicineForm from "../UpdatedMedicineForm";
 import "./UpdatedMedicineList.css";
+import { apiURL } from "../temp";
 
 // Remove Modal.setAppElement("#root");
 
@@ -30,7 +31,7 @@ function UpdatedMedicineList() {
     const fetchMedicines = async () => {
       setLoading(true); // Set loading to true before fetching data
       try {
-        const response = await fetch(`https://nearest-pharma-be.vercel.app/pharmacy/medicineByPharmacyId/${userInfo._id}`);
+        const response = await fetch(`${apiURL}/pharmacy/medicineByPharmacyId/${userInfo._id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch medicines");
         }
@@ -52,7 +53,7 @@ function UpdatedMedicineList() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://nearest-pharma-be.vercel.app/pharmacy/deleteRegisteredMedicine/${id}`, {
+      const response = await fetch(`${apiURL}/pharmacy/deleteRegisteredMedicine/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -95,7 +96,7 @@ function UpdatedMedicineList() {
   };
 
   const handleLogout = () => {
-    navigate("/signin");
+    navigate("/");
   };
 
   const handleSearch = (event) => {
@@ -125,7 +126,7 @@ function UpdatedMedicineList() {
         </Button>
       </div>
       <div className="medicine-header">
-        <h2>Updated Medicine List</h2>
+        <h2>Medicine List</h2>
         <div className="search-bar">
           <input
             type="text"
@@ -154,7 +155,7 @@ function UpdatedMedicineList() {
           <tbody>
             {filteredMedicines.map((medicine) => (
               <tr key={medicine._id}>
-                <td>{medicine.medicine.medicineName}</td>
+                <td>{medicine.medicineId.medicineName}</td>
                 <td>{medicine.medicineQuantity}</td>
                 <td>{medicine.price}</td>
                 <td>

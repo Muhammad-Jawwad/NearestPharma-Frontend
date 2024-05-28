@@ -3,6 +3,7 @@ import { Grid, Paper, Avatar, Typography } from "@mui/material";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import { useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { apiURL } from "./temp";
 
 const Registration = () => {
   const paperStyle = {
@@ -87,7 +88,7 @@ const Registration = () => {
     try {
       console.log("Form Values:", inputData);
       const response = await fetch(
-        "https://nearest-pharma-be.vercel.app/pharmacy/new",
+        `${apiURL}/pharmacy/new`,
         {
           method: "POST",
           headers: {
@@ -126,7 +127,7 @@ const Registration = () => {
       } else {
         const data = await response.json();
         console.log(data);
-        navigate("/signin");
+        navigate("/");
         localStorage.setItem("areaId", "65f8c337701d44c75ec1c9d7");
       }
     } catch (error) {
