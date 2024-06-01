@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, TextField, Grid } from "@mui/material";
 import "./UpdatedMedicineForm.css"; // Import your CSS file
 import { apiURL } from "./temp";
+import toast from "react-hot-toast";
 
 const UpdatedMedicineForm = ({ isOpen, onSave, onCancel, selectedMedicine, pharmacyId }) => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ const UpdatedMedicineForm = ({ isOpen, onSave, onCancel, selectedMedicine, pharm
     if (selectedMedicine) {
       console.log("selectedMedicine", selectedMedicine)
       setFormData({
-        name: selectedMedicine.medicine.medicineName || '',
+        name: selectedMedicine.medicineId.medicineName || '',
         quantity: (selectedMedicine.medicineQuantity || '').toString(),
         price: (selectedMedicine.price || '').toString(),
       });
@@ -33,7 +34,7 @@ const UpdatedMedicineForm = ({ isOpen, onSave, onCancel, selectedMedicine, pharm
     try {
       const form = {
         pharmacyId: pharmacyId,
-        medicineId: selectedMedicine.medicineId,
+        medicineId: selectedMedicine.medicineId._id,
         medicineQuantity: parseInt(formData.quantity),
         price: parseInt(formData.price),
         medicineName: formData.name,
@@ -48,11 +49,14 @@ const UpdatedMedicineForm = ({ isOpen, onSave, onCancel, selectedMedicine, pharm
       });
       console.log("response", response)
       if (!response.ok) {
-        throw new Error("Failed to update medicine quantity");
+        // throw new Error("Failed to update medicine quantity");
+        toast.error("Medicine updatation failed")
+        onCancel();
       }
 
       // Optionally handle successful response
       console.log("Medicine quantity updated successfully");
+      toast.success("Medicine updated successfully")
 
       // Call onSave to update the form data in the parent component
       onSave(formData);

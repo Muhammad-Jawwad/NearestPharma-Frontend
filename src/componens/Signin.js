@@ -16,6 +16,7 @@ import {
 import LockIcon from "@mui/icons-material/Lock";
 import Checkbox from "@mui/material/Checkbox";
 import { apiURL } from "./temp";
+import toast from "react-hot-toast";
 
 const Signin = () => {
   const paperStyle = {
@@ -48,23 +49,28 @@ const Signin = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        const data = await response.json();
+        toast.error(`${data.message}`);
+        // You can throw an error here if you want to prevent further execution
+        // throw new Error(data.message);
+      } else {
+        const data = await response.json();
+        localStorage.setItem("user-info", JSON.stringify(data.data));
+        localStorage.setItem("token", JSON.stringify(data.token));
+        toast.success('Successfully Login!')
+        navigate("/updatedmedicinelist");
+        setTimeout(() => {
+          props.resetForm();
+          props.setSubmitting(false);
+        }, 2000);
       }
-
-      const data = await response.json();
-      localStorage.setItem("user-info", JSON.stringify(data.data));
-      localStorage.setItem("token", JSON.stringify(data.token));
-
-      navigate("/updatedmedicinelist");
-      setTimeout(() => {
-        props.resetForm();
-        props.setSubmitting(false);
-      }, 2000);
     } catch (error) {
       console.error("Error:", error);
-      setErrorMessage("Please enter correct credentials.");
+      toast.error("An error occurred while processing your request.")
+      // setErrorMessage("An error occurred while processing your request.");
     }
   };
+
 
   const handleChange = () => {
     navigate("/Registration");
